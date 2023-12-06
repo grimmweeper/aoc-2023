@@ -1,8 +1,5 @@
 file_path = 'day5.txt'
 
-sum = 0
-
-
 def getMapNumber(number, mapArray):
     for map in mapArray:
         sourceRange = (map[1], map[1] + map[2] -1)
@@ -16,8 +13,7 @@ def getMapNumber(number, mapArray):
 with open(file_path, 'r') as file:
     gardenDict = {}
     fileContent = file.read().strip().split("\n")
-    # print(fileContent)
-
+    
     # Prepare garden dictionary
     currentKey = None
     for line in fileContent:
@@ -44,11 +40,8 @@ with open(file_path, 'r') as file:
         locationNumber = getMapNumber(humidityNumber, gardenDict['humidity-to-location map'])
         locationArray.append(locationNumber)
 
-
-    # print(locationArray)
     minLocationNumber = min(locationArray)
     print(minLocationNumber)
-    # print(gardenDict)
 
     
         
