@@ -6,7 +6,6 @@ cardStrength = {
     'A': 1,
     'K': 2,
     'Q': 3,
-    'J': 4,
     'T': 5,
     '9': 6,
     '8': 7,
@@ -15,7 +14,8 @@ cardStrength = {
     '5': 10,
     '4': 11,
     '3': 12,
-    '2': 13
+    '2': 13,
+    'J': 14,
 }
 
 # hand = 'AAAAA'
@@ -28,9 +28,38 @@ def getCardFrequency(hand):
             cardFrequency[card] = 1
     return cardFrequency
 
+def accountForJoker(cardFrequency):
+    frequencyArray = list(cardFrequency.values())
+    maxFrequency = max(frequencyArray)
+    
+    if 'J' in cardFrequency:
+        
+        
+        # {'J': 1, 'Q': 2, 'A': 2} => {'Q': 3, 'A': 2}
+        # Joker is not the max: Add to max frequency letter
+        if maxFrequency != cardFrequency['J']:
+            card = [k for k, v in cardFrequency.items() if v == maxFrequency]
+            cardFrequency[card[0]] += cardFrequency['J']
+            del cardFrequency['J']
+    
+        # {'J': 3, 'Q': 1, 'A': 1} => {'Q': 4, 'A': 1}
+        # Joker is the max: Add to the next highest max frequency letter
+        elif cardFrequency['J'] < 5:
+            frequencyArray.remove(maxFrequency)
+            newMaxFrequency = max(frequencyArray)
+            card = [k for k, v in cardFrequency.items() if v == newMaxFrequency]
+            if 'J' in card:
+                card.remove('J')
+            cardFrequency[card[0]] += cardFrequency['J']
+            del cardFrequency['J']
+
+    return cardFrequency
+
+
 def getHandTypeStrength(hand):
     cardFrequency = getCardFrequency(hand)
-    frequencyArray = list(cardFrequency.values())
+    newCardFrequency = accountForJoker(cardFrequency)
+    frequencyArray = list(newCardFrequency.values())
     maxFrequency = max(frequencyArray)
     if maxFrequency == 5:
         # 5-of-a-kind
