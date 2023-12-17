@@ -12,8 +12,7 @@ def getHashValue(word):
 
 with open(file_path, 'r') as file:
     wordArray = list(file.read().strip().split(","))
-    # print(wordArray)
-    
+
     for word in wordArray:
         hashSum += getHashValue(word)
     print (hashSum)
