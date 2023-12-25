@@ -86,7 +86,6 @@ with open(file_path, 'r') as file:
 
     totalFallCount = 0
     for brick in list(singleSupportDict.keys()):
-        # brickFallCount = 0
         fallQueue = queue()
         fallQueue.append(brick)
         brickFallDict = {}
@@ -106,7 +105,7 @@ with open(file_path, 'r') as file:
                 if (not brickStable):
                     fallQueue.append(fallenBrick)
                     brickFallDict[fallenBrick] = True
-        # print(brickFallDict)
+
         totalFallCount += len(brickFallDict.keys()) - 1
     print(totalFallCount)
             
